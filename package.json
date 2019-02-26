@@ -5,25 +5,30 @@
   "author": "",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "test": "jest"
+    "dev": "nuxt-ts",
+    "build": "nuxt-ts build",
+    "start": "nuxt-ts start",
+    "generate": "nuxt-ts generate",
+    "test": "jest",
+    "g": "npm install -g npm-check-updates typesync"
   },
   "dependencies": {
-    "cross-env": "^5.2.0",
-    "nuxt": "^2.4.0",
-    "bootstrap-vue": "^2.0.0-rc.11",
+    "@nuxtjs/pwa": "^2.6.0",
     "bootstrap": "^4.1.3",
-    "@nuxtjs/pwa": "^2.6.0"
+    "bootstrap-vue": "^2.0.0-rc.11",
+    "cross-env": "^5.2.0",
+    "nuxt-ts": "^2.4.3",
+    "vue-property-decorator": "^7.3.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9",
+    "@types/babel-core": "6.25.6",
+    "@types/bootstrap": "^4.2.2",
+    "@types/jest": "^24.0.9",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "jest": "^23.6.0",
+    "nodemon": "^1.18.9",
     "vue-jest": "^3.0.2"
   }
 }

@@ -2,9 +2,25 @@
   "extends": "@nuxt/typescript",
   "compilerOptions": {
     "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "~/*": ["./*"]
+    },
+    "strict": true,
+    "noImplicitReturns": true, // JSでreturnを書かないとundefinedが返りますが、返り値がvoidでなければそういうパターンを許さず明示的に書くことを強制します。
+    "noUnusedLocals": true, // 未使用の変数を警告します。
+    "noUnusedParameters": true, // 未使用の引数を警告します。2番目以降の引数だけ使いたいようなときは、使わない引数名を `_` から始めると警告が消えます。
+    // （未使用系は以前はコンパイルエラーでしたが、少なくとも2.6では警告だけになっています。書きかけのコードも実行できて便利。）
     "experimentalDecorators": true,
     "allowJs": true,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "target": "es5",
     "types": [
+      "@types/animejs",
+      "@types/bootstrap",
+      "@types/node-sass",
+      "@types/jest",
       "@types/node",
       "@nuxt/vue-app"
     ]

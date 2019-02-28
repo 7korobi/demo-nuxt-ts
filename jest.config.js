@@ -1,12 +1,18 @@
 module.exports = {
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/$1',
-    '^~/(.*)$': '<rootDir>/$1',
-    '^vue$': 'vue/dist/vue.common.js'
+    "^@/(.*)$": "<rootDir>/$1",
+    "^~/(.*)$": "<rootDir>/$1",
+    "^vue$": "vue/dist/vue.common.js"
   },
-  moduleFileExtensions: ['js', 'vue', 'json'],
+  globals: {
+    "ts-jest": {
+      diagnostics: false
+    }
+  },
+  moduleFileExtensions: ["ts", "js", "vue", "json"],
   transform: {
-    '^.+\\.js$': 'babel-jest',
-    '.*\\.(vue)$': 'vue-jest',
+    "^.+\\.ts$": "ts-jest",
+    "^.+\\.js$": "babel-jest",
+    ".*\\.(vue)$": "vue-jest"
   }
-}
+};

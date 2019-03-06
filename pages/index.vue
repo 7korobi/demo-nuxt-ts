@@ -7,7 +7,8 @@
       </h1>
       <h2 class="subtitle">My wondrous Nuxt.js project</h2>
       <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
+        <nuxt-link class="button--green" to="sample">Sample Vue</nuxt-link>
+        <a href="https://nuxtjs.org/" target="_blank" class="button--grey">Documentation</a>
         <a href="https://github.com/nuxt/nuxt.js" target="_blank" class="button--grey">GitHub</a>
       </div>
     </div>

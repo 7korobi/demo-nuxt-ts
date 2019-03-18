@@ -1,11 +1,12 @@
 <template>
   <section class="container">
-    <a class="button--green" @click="toggle_mode">mode {{ mode }} ( position at {{ at_pen }} ) </a>
-    <svg viewBox="0 0 229.2 69.6">
-      <defs>
-        <clipPath id="websiteClip">
-          <path
-            d="M79.7,29.1C74.3,36,67.5,43.8,59.3,52.5c-7.1,7-11.8,11.2-13.8,12.6c-4.6,3.5-7.9,5.3-9.8,5.3h-0.4c-2.9,0-4.8-1-5.6-3
+    <div>
+      <a class="button--green" @click="toggle_mode">mode {{ mode }} ( position at {{ at_pen }} )</a>
+      <svg viewBox="0 0 229.2 69.6">
+        <defs>
+          <clipPath id="websiteClip">
+            <path
+              d="M79.7,29.1C74.3,36,67.5,43.8,59.3,52.5c-7.1,7-11.8,11.2-13.8,12.6c-4.6,3.5-7.9,5.3-9.8,5.3h-0.4c-2.9,0-4.8-1-5.6-3
                   c-0.1-0.5-0.2-0.8-0.2-1v-0.6c0-2.2,1.8-6.5,5.5-12.8l7.8-14.3C31.4,49.5,23.8,57,19.8,60.8c-1.8,0-3.4-0.6-4.8-1.8
                   c-0.6-0.7-0.9-1.7-0.9-2.9c0-2.3,1.8-6.5,5.4-12.6c8-14.7,13.4-24.7,16.3-30.1h-0.2c-5.9,0.7-13,4.1-21.1,10c-1.4,0.9-3.4,2.7-6,5.5
                   V29c0.5,1.3,1.3,2.2,2.5,2.9c1.5,0.5,3,0.7,4.5,0.7c0.2,0,0.6,0,0.9,0.1c0,0.9-1.6,1.9-4.8,3.1c-1.7,0.5-3.1,0.7-4.2,0.7H6.9
@@ -47,21 +48,22 @@
                     M192.3,38.5c0.4,0,1.7,0,4.1,0.1c1.1-0.2,2.2-0.9,3.4-2c2.1-2.3,3.1-4.6,3.1-6.9c-0.1-0.8-0.3-1.2-0.7-1.2
                   C199.4,29.3,196.1,32.7,192.3,38.5z M134.8,47.9c-0.7,0.5-1.6,1.3-2.7,2.3c-0.6,0.6-1,1.2-1.4,1.8c1.5-0.4,2.6-1,3.4-1.8
                   c0.4-0.5,0.6-1,0.6-1.7V47.9z"
-          ></path>
-        </clipPath>
-      </defs>
-      <circle ref="pen" r="5" stroke="#444444" fill="#888888"></circle>
-      <path
-        v-for="({d, stroke, width, strokeDashoffset}, idx) in paths"
-        ref="paths"
-        clip-path="url(#websiteClip)"
-        fill="none"
-        :key="idx"
-        :d="d"
-        :stroke="stroke"
-        :stroke-width="width"
-      ></path>
-    </svg>
+            />
+          </clipPath>
+        </defs>
+        <circle ref="pen" r="5" stroke="#444444" fill="#888888" />
+        <path
+          v-for="({d, stroke, width, strokeDashoffset}, idx) in paths"
+          ref="paths"
+          clip-path="url(#websiteClip)"
+          fill="none"
+          :key="idx"
+          :d="d"
+          :stroke="stroke"
+          :stroke-width="width"
+        />
+      </svg>
+    </div>
   </section>
 </template>
 <style>
@@ -90,8 +92,8 @@ type IPathData = {
 
 @Component
 export default class Sample extends Vue {
-  mode : number = 2
-  at_pen : number = 0
+  mode: number = 2
+  at_pen: number = 0
 
   $refs!: {
     paths: HTMLElement[]
@@ -99,7 +101,7 @@ export default class Sample extends Vue {
     btn: HTMLElement[]
   }
 
-  path_datas : IPathData[] = [{
+  path_datas: IPathData[] = [{
     d: "M18.5,33.91S0,36.67,6.67,24.17c8-8.34,22.15-15.46,31.31-13.62,8.34,1-.95,9.34-8.81,24.5C23.34,46.29,15.08,55.23,18.5,57c1.67.86,12-8.3,21.33-20C49.55,24.8,58.23,9.57,61.17,9.5,67.83,9.33,49.88,35.43,40.83,52c-4.14,7.59-10.66,14.17-6.66,15.5C38,68.77,49.17,64,83,15.67c1.59-2.27,7-10.49,8.6-13",
     stroke: "#660000",
     width: 15,
@@ -118,28 +120,26 @@ export default class Sample extends Vue {
   }]
 
   path_modes = [
-    this.path_datas.slice(0,1),
-    this.path_datas.slice(0,2),
-    this.path_datas.slice(0,4),
+    this.path_datas.slice(0, 1),
+    this.path_datas.slice(0, 2),
+    this.path_datas.slice(0, 4),
   ]
 
-  toggle_mode () : void {
-    this.mode = ( 1 + this.mode ) % this.path_modes.length
+  toggle_mode(): void {
+    this.mode = (1 + this.mode) % this.path_modes.length
   }
 
-  get paths () : IPathData[] {
+  get paths(): IPathData[] {
     return this.path_modes[this.mode]
   }
 
   @Watch('mode')
-  onModeChange () : void {
-    this.$nextTick(()=>{
+  onModeChange(): void {
+    this.$nextTick(() => {
       const { paths, pen } = this.$refs;
-      const speed : number = 1200;
-      const move_pens : Function[] = paths.map(el => anime.path(el));
+      const speed: number = 1200;
+      const move_pens: Function[] = paths.map(el => anime.path(el));
 
-
-      this.at_pen = 0
       anime({
         loop: true,
         direction: 'alternate',
@@ -147,13 +147,13 @@ export default class Sample extends Vue {
         targets: this,
         duration: speed * paths.length,
         round: 1,
-        at_pen: 100,
+        at_pen: [0, 100],
       })
 
       anime({
         loop: true,
         direction: 'alternate',
-        easing: 'easeInOutSine',
+        easing: 'easeOutSine',
         targets: pen,
         duration: speed * paths.length,
         round: 10,
@@ -164,7 +164,7 @@ export default class Sample extends Vue {
       anime({
         loop: true,
         direction: 'alternate',
-        easing: 'easeInOutSine',
+        easing: 'easeOutSine',
         targets: paths,
         duration: speed,
         delay: (__, i) => i * speed,
@@ -173,7 +173,7 @@ export default class Sample extends Vue {
     })
   }
 
-  mounted() : void {
+  mounted(): void {
     this.mode = 0
   }
 }

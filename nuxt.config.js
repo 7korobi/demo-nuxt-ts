@@ -56,4 +56,8 @@ module.exports = {
       
     }
   }
+
+  router: {
+    base: '/demo-nuxt-ts/'
+  }
 }

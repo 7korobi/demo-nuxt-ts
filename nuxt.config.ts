@@ -53,8 +53,9 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {
-      
+    extend(config : any, ctx : any) : void {
+      config;
+      ctx;
     }
   },
 
@@ -66,5 +67,10 @@ module.exports = {
     importScripts: [
       'sample-sw.js'
     ]
+  },
+
+  manifest: {
+    name: 'Nuxt TS demo',
+    lang: 'ja',
   }
 }

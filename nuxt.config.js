@@ -34,6 +34,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    "~/plugins/sw",
   ],
 
   /*
@@ -55,5 +56,15 @@ module.exports = {
     extend(config, ctx) {
       
     }
+  },
+
+  workbox: {
+    dev: true,
+    offlineAssets: [
+      "icon.png"
+    ],
+    importScripts: [
+      'sample-sw.js'
+    ]
   }
 }

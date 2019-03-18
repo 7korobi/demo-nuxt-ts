@@ -55,7 +55,7 @@ module.exports = {
     extend(config, ctx) {
       
     }
-  }
+  },
 
   router: {
     base: '/demo-nuxt-ts/'

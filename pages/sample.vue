@@ -1,5 +1,6 @@
 <template>
   <section class="container">
+    <a class="button--green" @click="toggle_mode">mode {{ mode }} ( position at {{ at_pen }} ) </a>
     <svg viewBox="0 0 229.2 69.6">
       <defs>
         <clipPath id="websiteClip">
@@ -79,16 +80,26 @@ svg {
 
 <script lang="ts">
 import anime from 'animejs'
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
+
+type IPathData = {
+  d: string
+  stroke: string
+  width: number
+}
 
 @Component
 export default class Sample extends Vue {
+  mode : number = 2
+  at_pen : number = 0
+
   $refs!: {
-    paths: HTMLElement[];
-    pen: HTMLElement[];
+    paths: HTMLElement[]
+    pen: HTMLElement[]
+    btn: HTMLElement[]
   }
 
-  paths = [{
+  path_datas : IPathData[] = [{
     d: "M18.5,33.91S0,36.67,6.67,24.17c8-8.34,22.15-15.46,31.31-13.62,8.34,1-.95,9.34-8.81,24.5C23.34,46.29,15.08,55.23,18.5,57c1.67.86,12-8.3,21.33-20C49.55,24.8,58.23,9.57,61.17,9.5,67.83,9.33,49.88,35.43,40.83,52c-4.14,7.59-10.66,14.17-6.66,15.5C38,68.77,49.17,64,83,15.67c1.59-2.27,7-10.49,8.6-13",
     stroke: "#660000",
     width: 15,
@@ -106,33 +117,64 @@ export default class Sample extends Vue {
     width: 13,
   }]
 
-  mounted() {
-    const refs = this.$refs;
-    const speed = 1200;
-    const move_pens: Function[] = refs.paths.map(el => anime.path(el));
-    anime({
-      targets: refs.pen,
-      loop: true,
-      direction: 'alternate',
-      easing: 'easeInOutSine',
-      duration: speed * 4,
-      cx: move_pens.map(path => path('x')),
-      cy: move_pens.map(path => path('y')),
-    });
-    anime({
-      targets: refs.paths,
-      loop: true,
-      direction: 'alternate',
-      easing: 'easeInOutSine',
-      duration: speed,
-      delay: (__, i) => i * speed,
-      strokeDashoffset: [anime.setDashoffset, 0],
-    });
+  path_modes = [
+    this.path_datas.slice(0,1),
+    this.path_datas.slice(0,2),
+    this.path_datas.slice(0,4),
+  ]
+
+  toggle_mode () : void {
+    this.mode = ( 1 + this.mode ) % this.path_modes.length
   }
-  async reset() {
-    return await new Promise((ok) => {
-      ok()
+
+  get paths () : IPathData[] {
+    return this.path_modes[this.mode]
+  }
+
+  @Watch('mode')
+  onModeChange () : void {
+    this.$nextTick(()=>{
+      const { paths, pen } = this.$refs;
+      const speed : number = 1200;
+      const move_pens : Function[] = paths.map(el => anime.path(el));
+
+
+      this.at_pen = 0
+      anime({
+        loop: true,
+        direction: 'alternate',
+        easing: 'linear',
+        targets: this,
+        duration: speed * paths.length,
+        round: 1,
+        at_pen: 100,
+      })
+
+      anime({
+        loop: true,
+        direction: 'alternate',
+        easing: 'easeInOutSine',
+        targets: pen,
+        duration: speed * paths.length,
+        round: 10,
+        cx: move_pens.map(path => path('x')),
+        cy: move_pens.map(path => path('y')),
+      })
+
+      anime({
+        loop: true,
+        direction: 'alternate',
+        easing: 'easeInOutSine',
+        targets: paths,
+        duration: speed,
+        delay: (__, i) => i * speed,
+        strokeDashoffset: [anime.setDashoffset, 0],
+      })
     })
+  }
+
+  mounted() : void {
+    this.mode = 0
   }
 }
 </script>

@@ -13,7 +13,7 @@
     "test": "jest",
     "g": "npm install -g npm-check-updates typesync",
     "dist:brotli": "find dist -type f -not -name \"*.br\" | grep -v \"dist/font\" | xargs -L1  brotli -Z -f -k",
-    "dist:push": "push-dir --dir=dest --branch=gh-pages --cleanup"
+    "dist:push": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
     "@nuxtjs/pwa": "^3.0.0-beta.10",

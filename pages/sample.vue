@@ -125,6 +125,12 @@ export default class Sample extends Vue {
     this.path_datas.slice(0, 4),
   ]
 
+  path_frames = [
+    [{value: [0,100]}],
+    [{value: [0,50]},{value: [50,100]}],
+    [{value: [0,25]},{value: [25,50]},{value: [50,75]},{value: [75,100]}],
+  ]
+
   toggle_mode(): void {
     this.mode = (1 + this.mode) % this.path_modes.length
   }
@@ -143,11 +149,11 @@ export default class Sample extends Vue {
       anime({
         loop: true,
         direction: 'alternate',
-        easing: 'linear',
+        easing: 'easeOutSine',
         targets: this,
         duration: speed * paths.length,
         round: 1,
-        at_pen: [0, 100],
+        at_pen: this.path_frames[this.mode],
       })
 
       anime({
